@@ -41,3 +41,32 @@ python pafas/app/main.py
 - "settings" UI 
   - configure sensors?
   - configure output?
+
+## Data files
+
+### Matlab export format
+
+These are the example text export files from Elizabeth, e.g. 
+[data/S014.txt](data/S014.txt).
+
+Ignoring blank lines:
+```
+S014
+Breaths/Minute: 10.08
+Block 1
+R wave timestamps
+1377
+...
+Inhale marker timestamps
+2
+...
+Block 2
+R wave timestamps
+1223
+...
+Block 3
+...
+```
+Numbers are timestamps in ms from start of session/file/block.
+Each block is independent, so block needs to be selected, either on open,
+in settings or in main UI.
