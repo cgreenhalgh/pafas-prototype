@@ -1,5 +1,7 @@
 from tkinter import Tk, Menu, filedialog, ttk, Frame
 from os import path
+from gui import MatlabFileReaderFrame
+from engine import Heartrate
 
 # top-level window
 root = Tk()
@@ -8,27 +10,31 @@ root.title("PAFAS app")
 # set up menu options
 menu = Menu(root)
 
-def open():
-    file = filedialog.askopenfilename(initialdir= path.dirname(path.dirname(path.dirname(__file__))))
-    if not file:
-        return
-    print(f'Open file {file}')
-
-open_item = Menu(menu)
-open_item.add_command(label='Open', command=open)
-menu.add_cascade(label='File', menu=open_item)
 root.config(menu=menu)
+
+# internal observable
+heartrate = Heartrate()
 
 # Main window content
 class App(ttk.Frame):
     def __init__(self, master):
         super().__init__(master)
         self.grid()
+        # test
         ttk.Label(self, text="Hello World!").grid(column=0, row=0)
-        ttk.Button(self, text="Quit", command=root.destroy).grid(column=1, row=0)
+        # file loader
+        mfr = MatlabFileReaderFrame(self, heartrate)
+        mfr.grid(column=0,row=1)
+        open_item = Menu(menu)
+        open_item.add_command(label='Load data file...', command=mfr.load)
+        open_item.add_command(label='Quit', command=root.destroy)
+        menu.add_cascade(label='File', menu=open_item)
         self.pack()
 
 frm = App(root)
+
+# test...
+heartrate.subscribe(lambda event: print(f'HB event: IBI {event.value}'))
 
 # run the app...
 root.mainloop()
