@@ -1,6 +1,6 @@
 from tkinter import Tk, Menu, filedialog, ttk, Frame
 from os import path
-from gui import MatlabFileReaderFrame
+from gui import MatlabFileReaderFrame, MidiOutFrame
 from engine import Heartrate
 
 # top-level window
@@ -24,7 +24,9 @@ class App(ttk.Frame):
         ttk.Label(self, text="Hello World!").grid(column=0, row=0)
         # file loader
         mfr = MatlabFileReaderFrame(self, heartrate)
-        mfr.grid(column=0,row=1)
+        mfr.grid(sticky="W", column=0,row=1)
+        mo = MidiOutFrame(self, heartrate)
+        mo.grid(sticky="W", column=0,row=2)
         open_item = Menu(menu)
         open_item.add_command(label='Load data file...', command=mfr.load)
         open_item.add_command(label='Quit', command=root.destroy)

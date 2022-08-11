@@ -23,6 +23,7 @@ conda activate pafas
 Install dependencies,
 ```
 conda install numpy
+python -m pip install -U pygame
 ```
 you can check the version,
 ```
@@ -30,18 +31,39 @@ python --version
 ```
 I'm currently "Python 3.10.4"
 
+
+### MIDI
+
+For MIDI loopback on windows, try installing
+[loopMIDI](https://www.tobias-erichsen.de/software/loopmidi.html) 
+(requires admin rights).
+
+[pygame.midi](https://www.pygame.org/docs/ref/midi.html#pygame.midi.Input.poll)
+seems hopeful and includes a poll command.
+
+Otherwise, for events from another thread to tkinter see
+[tkdocs](http://tkdocs.com/tutorial/eventloop.html#asyncio), e.g. a custom event
+```
+root.event_generate("<<MyOwnEvent>>")
+```
+
+## Usage
+
 Run:
 ```
 python pafas/app/main.py
 ```
 
-## Usage
-
 To use test data,
-- press 'Load...' and select a Matlab text export data file
+- After 'Data file:' press 'Load...' and select a Matlab text export data file
 - (optionally) choose a different data block
 - press 'Play'
 - the 'light' at the end should flash on each heartbeat
+
+To send midi data,
+- After 'MIDI out:' press 'Scan'
+- choose midi output to use
+- the 'light' should go green, and flash red when midi is sent
 
 ## Design
 
